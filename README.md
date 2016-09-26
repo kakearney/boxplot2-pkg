@@ -18,7 +18,7 @@ This software requires [Matlab](http://www.mathworks.com/products/matlab/) (test
 
 Git users can clone (or fork, then clone) directly from this repository.
 
-<!-- Alternatively, you may download a zipped version of this code either from this page or from the [boxplot2.m entry](http://www.mathworks.com/matlabcentral/fileexchange/...) on the MatlabCentral FileExchange. The File Exchange entry is updated daily from this repository. -->
+Alternatively, you may download a zipped version of this code either from this page or from the [boxplot2.m entry](http://www.mathworks.com/matlabcentral/fileexchange/59303-kakearney-boxplot2-pkg) on the MatlabCentral FileExchange. The File Exchange entry is updated daily from this repository.
 
 ### Installation
 
