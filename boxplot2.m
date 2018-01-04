@@ -123,8 +123,9 @@ try
     h.uwhis = copyobj(findall(hax, 'tag', 'Upper Whisker'), In.axes);
 
     close(figtmp);
-catch
+catch ME
     close(figtmp);
+    rethrow(ME);
 end
 
     h = structfun(@(x) reshape(flipud(x), ny, nx), h, 'uni', 0);
