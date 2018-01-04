@@ -84,41 +84,50 @@ ybox = reshape(In.y, [], ndata)';
 % Use bar graph to get x positions
 
 figtmp = figure('visible', 'off');
-hax = axes;
-hb = bar(In.x, In.y(:,:,1), In.barwidth);
-for ib = 1:length(hb)
-    if verLessThan('matlab','8.4.0')
-        xbar = get(get(hb(ib), 'children'), 'xdata');
-        xb(:,ib) = mean(xbar,1);
-    else
-        xb(:,ib) = hb(ib).XData + hb(ib).XOffset;
+try
+    hax = axes;
+    hb = bar(In.x, In.y(:,:,1), In.barwidth);
+    for ib = 1:length(hb)
+        if verLessThan('matlab','8.4.0')
+            xbar = get(get(hb(ib), 'children'), 'xdata');
+            xb(:,ib) = mean(xbar,1);
+        else
+            xb(:,ib) = hb(ib).XData + hb(ib).XOffset;
+        end
     end
+    if verLessThan('matlab', '8.4.0')
+        boxwidth = diff(minmax(xbar(:,1)));
+    else
+        if ny > 1
+            boxwidth = diff([hb(1:2).XOffset])*In.barwidth;
+        else
+            mindx = min(diff(In.x));
+            boxwidth = mindx .* In.barwidth;
+        end
+    end
+    delete(hb);
+
+    boxplot(ybox, 'positions', xb(:), ...
+                  'notch', In.notch, ...
+                  'orientation', In.orientation, ...
+                  'symbol', '+', ...
+                  'widths', boxwidth, ...
+                  'whisker', In.whisker);
+
+    h.box   = copyobj(findall(hax, 'tag', 'Box'), In.axes);
+    h.ladj  = copyobj(findall(hax, 'tag', 'Lower Adjacent Value'), In.axes);
+    h.lwhis = copyobj(findall(hax, 'tag', 'Lower Whisker'), In.axes);
+    h.med   = copyobj(findall(hax, 'tag', 'Median'), In.axes);
+    h.out   = copyobj(findall(hax, 'tag', 'Outliers'), In.axes);
+    h.uadj  = copyobj(findall(hax, 'tag', 'Upper Adjacent Value'), In.axes);
+    h.uwhis = copyobj(findall(hax, 'tag', 'Upper Whisker'), In.axes);
+
+    close(figtmp);
+catch
+    close(figtmp);
 end
-if verLessThan('matlab', '8.4.0')
-    boxwidth = diff(minmax(xbar(:,1)));
-else
-    boxwidth = diff([hb(1:2).XOffset])*In.barwidth;
-end
-delete(hb);
 
-boxplot(ybox, 'positions', xb(:), ...
-              'notch', In.notch, ...
-              'orientation', In.orientation, ...
-              'symbol', '+', ...
-              'widths', boxwidth, ...
-              'whisker', In.whisker);
-
-h.box   = copyobj(findall(hax, 'tag', 'Box'), In.axes);
-h.ladj  = copyobj(findall(hax, 'tag', 'Lower Adjacent Value'), In.axes);
-h.lwhis = copyobj(findall(hax, 'tag', 'Lower Whisker'), In.axes);
-h.med   = copyobj(findall(hax, 'tag', 'Median'), In.axes);
-h.out   = copyobj(findall(hax, 'tag', 'Outliers'), In.axes);
-h.uadj  = copyobj(findall(hax, 'tag', 'Upper Adjacent Value'), In.axes);
-h.uwhis = copyobj(findall(hax, 'tag', 'Upper Whisker'), In.axes);
-  
-close(figtmp);
-
-h = structfun(@(x) reshape(flipud(x), ny, nx), h, 'uni', 0);
+    h = structfun(@(x) reshape(flipud(x), ny, nx), h, 'uni', 0);
 
 
 
