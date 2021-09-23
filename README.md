@@ -1,5 +1,6 @@
 # boxplot2.m: Alternative Matlab boxplots
 **Author: Kelly Kearney**
+[![View boxplot2 on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/59303-boxplot2)
 
 
 This repository includes the code for the `boxplot2.m` Matlab function, along with all dependent functions required to run it.  This function is intended as an alternative to the boxplot.m function that is included in the Statistics and Machine Learning Toolbox. 
