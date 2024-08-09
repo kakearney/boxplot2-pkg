@@ -96,7 +96,7 @@ try
         end
     end
     if verLessThan('matlab', '8.4.0')
-        boxwidth = diff(minmax(xbar(:,1)));
+        boxwidth = max(xbar(:,1)) - min(xbar(:,1));
     else
         if ny > 1
             boxwidth = diff([hb(1:2).XOffset])*In.barwidth;
